@@ -50,6 +50,7 @@ class, but can also be customized to work with any arbitrary data structure.
 On Ubuntu, you can install most of the dependencies with the following command:
 
     sudo apt-get install libpython3-dev python3-dev
+    sudo apt-get install qt5-default
 
 
 #### Check GDB version
@@ -57,7 +58,7 @@ Before installing the gdb-imagewatch plugin, you need to first check if your
 GDB version is >= 7.10:
 
 ```shell
-$ gdb --version
+gdb --version
 ```
 
 On Ubuntu 16.04.3, this will print `GNU gdb (Ubuntu 7.11.1-0ubuntu1~16.5)
@@ -81,11 +82,11 @@ compatible version of GDB with python3 support. Here are the commands for GDB
 7.10:
 
 ```shell
-$ wget http://ftp.gnu.org/gnu/gdb/gdb-7.10.tar.gz
-$ tar -zxvf gdb-7.10.tar.gz
-$ cd gdb-7.10
-$ ./configure --with-python=python3 --disable-werror
-$ make -j8
+wget http://ftp.gnu.org/gnu/gdb/gdb-7.10.tar.gz
+tar -zxvf gdb-7.10.tar.gz
+cd gdb-7.10
+./configure --with-python=python3 --disable-werror
+make -j8
 ```
 
 Notice that if you already have an older version of GDB, you will need to
@@ -101,10 +102,9 @@ Clone the GDB ImageWatch plugin to any folder you prefer and initialize the
 submodules:
 
 ```shell
-$ git clone https://github.com/csantosbh/gdb-imagewatch
-$ cd gdb-imagewatch
-$ git submodule init
-$ git submodule update
+git clone https://github.com/csantosbh/gdb-imagewatch
+cd gdb-imagewatch
+git submodule update --init
 ```
 
 ### Ubuntu 16.04 manual installation with QtCreator
@@ -124,9 +124,12 @@ To build this plugin, create a `build` folder, open a terminal window inside it
 and run:
 
 ```shell
-$ qmake .. BUILD_MODE=release PREFIX=/path/to/installation/folder
-$ make -j4
-$ make install
+mkdir build
+cd build
+export QT_SELECT=5
+qmake .. BUILD_MODE=release PREFIX=/path/to/installation/folder
+make -j4
+make install
 ```
 
 The installation step is optional; you can simply use the plugin from the build
@@ -145,8 +148,8 @@ To fix that, you need to find the location for your libGL.so file. The
 following commands should help you find it:
 
 ```shell
-$ sudo updatedb
-$ locate -i libgl.so
+sudo updatedb
+locate -i libgl.so
 ```
 
 If you have installed the proprietary drivers, you don't want to use the mesa
